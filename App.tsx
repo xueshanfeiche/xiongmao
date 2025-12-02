@@ -3,7 +3,7 @@ import { Dashboard } from './views/Dashboard';
 import { Learn } from './views/Learn';
 import { Review } from './views/Review';
 import { AppView, UserProgress } from './types';
-import { HANZI_DATA, INITIAL_PROGRESS, getAllHanzi } from './constants';
+import { INITIAL_PROGRESS, getAllHanzi } from './constants';
 import { loadProgress, saveProgress } from './services/storage';
 
 const App: React.FC = () => {

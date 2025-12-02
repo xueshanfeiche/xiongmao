@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserProgress, HanziChar, AppView } from '../types';
+import { UserProgress, HanziChar } from '../types';
 import { Button } from '../components/Button';
 import { ArrowLeft, ArrowRight, Volume2, Check, RotateCcw, Repeat } from 'lucide-react';
 import { updateMastery } from '../services/storage';
