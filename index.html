@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panda Hanzi - 熊猫识字</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Noto Sans SC"', 'sans-serif'],
+              serif: ['"Noto Serif SC"', 'serif'],
+              display: ['"ZCOOL KuaiLe"', 'cursive'],
+            },
+            colors: {
+              'panda-bg': '#FFFBF0',
+              'panda-primary': '#FF8E3C',
+              'panda-secondary': '#ABD1C6',
+              'panda-accent': '#E16162',
+              'panda-text': '#2B2D42',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #FFFBF0;
+      }
+      .character-card {
+        background: white;
+        box-shadow: 8px 8px 0px 0px #F9BC60;
+        border: 4px solid #2B2D42;
+        transition: transform 0.1s;
+      }
+      .character-card:active {
+        transform: translate(4px, 4px);
+        box-shadow: 4px 4px 0px 0px #F9BC60;
+      }
+      
+      /* Dify Chatbot Theme Integration */
+      #dify-chatbot-bubble-button {
+        background-color: #FF8E3C !important; /* panda-primary */
+        box-shadow: 4px 4px 0px 0px #2B2D42 !important;
+        border: 2px solid #2B2D42 !important;
+        transition: all 0.2s ease !important;
+      }
+      #dify-chatbot-bubble-button:hover {
+        transform: translate(-2px, -2px) !important;
+        box-shadow: 6px 6px 0px 0px #2B2D42 !important;
+      }
+      #dify-chatbot-bubble-window {
+        width: 24rem !important;
+        height: 40rem !important;
+        border: 4px solid #2B2D42 !important;
+        border-radius: 20px !important;
+        box-shadow: 8px 8px 0px 0px #F9BC60 !important;
+        overflow: hidden !important;
+      }
+
+      /* 3D Flip Card Utilities */
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      .transform-style-3d {
+        transform-style: preserve-3d;
+      }
+      .backface-hidden {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+      .rotate-y-180 {
+        transform: rotateY(180deg);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "vite": "https://aistudiocdn.com/vite@^7.2.6",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script>
+      window.difyChatbotConfig = {
+        token: '1PnpnVdrNR7aFJ1f',
+        inputs: {
+          // You can define the inputs from the Start node here
+          // key is the variable name
+          // e.g.
+          // name: "NAME"
+        },
+        systemVariables: {
+          // user_id: 'YOU CAN DEFINE USER ID HERE',
+          // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+        },
+        userVariables: {
+          // avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
+          // name: 'YOU CAN DEFINE USER NAME HERE',
+        },
+      }
+    </script>
+    <script
+      src="https://udify.app/embed.min.js"
+      id="1PnpnVdrNR7aFJ1f"
+      defer>
+    </script>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
