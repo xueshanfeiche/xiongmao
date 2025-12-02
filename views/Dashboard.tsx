@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppView, UserProgress, HanziChar } from '../types';
 import { Button } from '../components/Button';
-import { Star, BookOpen, Brain, Sparkles, Lock, CheckCircle, MessageCircle } from 'lucide-react';
+import { Star, BookOpen, Brain, Lock, CheckCircle } from 'lucide-react';
 
 interface DashboardProps {
   progress: UserProgress;
@@ -57,22 +57,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ progress, data, onChangeVi
           </Button>
         </div>
       </div>
-
-       {/* AI Story Action */}
-       <div className="bg-purple-50 p-6 rounded-3xl border-4 border-purple-200 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="bg-white p-4 rounded-full border-4 border-purple-200">
-              <Sparkles className="w-10 h-10 text-purple-400" />
-            </div>
-            <div className="text-left">
-              <h2 className="text-2xl font-display text-panda-text">魔法绘本</h2>
-              <p className="text-gray-600 text-sm">用你学过的汉字生成神奇的故事。</p>
-            </div>
-          </div>
-          <Button onClick={() => onChangeView(AppView.STORY)} variant="accent" size="md">
-            生成故事
-          </Button>
-        </div>
 
       {/* Progress Map (Simplified) */}
       <div className="bg-white p-6 rounded-3xl border-4 border-panda-text shadow-[8px_8px_0_#ABD1C6]">

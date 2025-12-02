@@ -18,8 +18,7 @@ export interface UserProgress {
 export enum AppView {
   DASHBOARD = 'DASHBOARD',
   LEARN = 'LEARN',
-  REVIEW = 'REVIEW',
-  STORY = 'STORY'
+  REVIEW = 'REVIEW'
 }
 
 export interface QuizQuestion {

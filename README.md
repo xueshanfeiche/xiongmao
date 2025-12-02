@@ -1,6 +1,6 @@
 # Panda Hanzi - 熊猫识字
 
-A fun, gamified Chinese character learning platform for children, featuring AI-generated stories.
+A fun, gamified Chinese character learning platform for children.
 
 ## Project Setup
 
@@ -21,11 +21,7 @@ This project is built with React, TypeScript, and Vite.
 
 ### Local Development
 
-1.  Create a `.env` file in the root directory to store your API key:
-    ```
-    API_KEY=your_google_gemini_api_key
-    ```
-2.  Start the development server:
+1.  Start the development server:
     ```bash
     npm run dev
     ```
@@ -46,16 +42,11 @@ Cloudflare Pages is the recommended hosting platform for this application.
     -   **Framework Preset:** Vite
     -   **Build command:** `npm run build`
     -   **Build output directory:** `dist`
-4.  **Environment Variables:**
-    -   In the setup step, add an environment variable:
-        -   **Variable name:** `API_KEY`
-        -   **Value:** Your Google Gemini API Key.
-5.  **Deploy:** Click **Save and Deploy**.
+4.  **Deploy:** Click **Save and Deploy**.
 
 ### Method 2: Direct Upload
 
 1.  **Build Locally:**
-    -   Ensure you have your `.env` file setup with your API Key.
     -   Run the build command:
         ```bash
         npm run build
@@ -64,12 +55,3 @@ Cloudflare Pages is the recommended hosting platform for this application.
 2.  **Upload to Cloudflare:**
     -   Go to Cloudflare Dashboard > **Workers & Pages** > **Create Application** > **Pages** > **Upload Assets**.
     -   Upload the `dist` folder.
-
-## Important Security Note
-
-This application calls the Google Gemini API directly from the client-side browser.
-To prevent unauthorized usage of your quota:
-1.  Go to [Google AI Studio](https://aistudio.google.com/) or Google Cloud Console.
-2.  Edit your API Key restrictions.
-3.  Set **Application restrictions** to **HTTP referrers (web sites)**.
-4.  Add your Cloudflare Pages domain (e.g., `https://panda-hanzi.pages.dev/*`) and your local development URL (e.g., `http://localhost:5173/*`).

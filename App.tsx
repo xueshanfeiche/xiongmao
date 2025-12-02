@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Dashboard } from './views/Dashboard';
 import { Learn } from './views/Learn';
 import { Review } from './views/Review';
-import { StoryTime } from './views/StoryTime';
 import { AppView, UserProgress } from './types';
 import { HANZI_DATA, INITIAL_PROGRESS, getAllHanzi } from './constants';
 import { loadProgress, saveProgress } from './services/storage';
@@ -49,14 +48,6 @@ const App: React.FC = () => {
             onBack={() => setCurrentView(AppView.DASHBOARD)}
             onUpdateProgress={handleUpdateProgress}
           />
-        );
-      case AppView.STORY:
-        return (
-            <StoryTime
-                progress={progress}
-                data={data}
-                onBack={() => setCurrentView(AppView.DASHBOARD)}
-            />
         );
       default:
         return <div>Not Found</div>;
