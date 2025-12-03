@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { UserProgress, HanziChar } from '../types';
+import React, { useState, useEffect } from 'react';
+import { UserProgress, HanziChar, AppView } from '../types';
 import { Button } from '../components/Button';
 import { ArrowLeft, ArrowRight, Volume2, Check, RotateCcw, Repeat } from 'lucide-react';
 import { updateMastery } from '../services/storage';
@@ -7,19 +7,47 @@ import { updateMastery } from '../services/storage';
 interface LearnProps {
   progress: UserProgress;
   data: HanziChar[];
+  selectedLevel?: number;
   onBack: () => void;
   onUpdateProgress: (newProgress: UserProgress) => void;
 }
 
-export const Learn: React.FC<LearnProps> = ({ progress, data, onBack, onUpdateProgress }) => {
-  const [currentIndex, setCurrentIndex] = useState(progress.unlockedIndex);
+export const Learn: React.FC<LearnProps> = ({ progress, data, selectedLevel, onBack, onUpdateProgress }) => {
+  // Filter data if level is selected, otherwise use all data
+  const [learningQueue, setLearningQueue] = useState<HanziChar[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
 
-  const currentChar = data[currentIndex] || data[0];
+  // Initialize queue based on selection or linear progress
+  useEffect(() => {
+    let queue: HanziChar[] = [];
+    if (selectedLevel) {
+        queue = data.filter(c => c.level === selectedLevel);
+    } else {
+        // Default linear mode: Up to unlocked index
+        queue = data.slice(0, progress.unlockedIndex + 1);
+    }
+    
+    // If empty (shouldn't happen with valid data), fallback
+    if (queue.length === 0) queue = [data[0]];
+    
+    setLearningQueue(queue);
+    
+    // If linear mode, start at the latest unlocked. If level mode, start at 0 (or first unmastered?)
+    if (!selectedLevel && progress.unlockedIndex < queue.length) {
+        setCurrentIndex(progress.unlockedIndex);
+    } else {
+        setCurrentIndex(0);
+    }
+  }, [selectedLevel, data, progress.unlockedIndex]);
+
+  const currentChar = learningQueue[currentIndex] || learningQueue[0];
+
+  if (!currentChar) return <div>Loading...</div>;
 
   const handleNext = () => {
     setIsFlipped(false);
-    if (currentIndex < data.length - 1 && currentIndex <= progress.unlockedIndex) {
+    if (currentIndex < learningQueue.length - 1) {
       setCurrentIndex(prev => prev + 1);
     }
   };
@@ -39,10 +67,13 @@ export const Learn: React.FC<LearnProps> = ({ progress, data, onBack, onUpdatePr
     if (result === 'good') {
         // Auto advance if it was a good practice
         setTimeout(() => {
-            if (currentIndex === progress.unlockedIndex && newProgress.unlockedIndex > progress.unlockedIndex) {
-                // We just unlocked a new one!
-                setCurrentIndex(newProgress.unlockedIndex);
-                setIsFlipped(false);
+             // In linear mode, if we unlocked something new, the queue might need to update in parent, 
+             // but for now we just handle local index
+            if (currentIndex < learningQueue.length - 1) {
+                handleNext();
+            } else if (!selectedLevel) {
+                 // End of linear queue check
+                 // Force re-render will happen via onUpdateProgress if unlockedIndex changed
             }
         }, 500);
     }
@@ -83,7 +114,7 @@ export const Learn: React.FC<LearnProps> = ({ progress, data, onBack, onUpdatePr
           <ArrowLeft className="mr-2 h-4 w-4" /> 返回
         </Button>
         <span className="font-display text-panda-text text-xl">
-           等级 {currentChar.level}
+           等级 {currentChar.level} ({currentIndex + 1}/{learningQueue.length})
         </span>
       </div>
 
@@ -187,7 +218,7 @@ export const Learn: React.FC<LearnProps> = ({ progress, data, onBack, onUpdatePr
 
         <button 
           onClick={handleNext} 
-          disabled={currentIndex >= progress.unlockedIndex}
+          disabled={currentIndex >= learningQueue.length - 1}
           className="p-4 rounded-full bg-gray-200 text-gray-600 disabled:opacity-30 hover:bg-gray-300 transition-colors shadow-sm"
         >
           <ArrowRight size={24} />

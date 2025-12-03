@@ -8,7 +8,7 @@ export interface HanziChar {
 }
 
 export interface UserProgress {
-  unlockedIndex: number; // The highest index available to learn
+  unlockedIndex: number; // The highest index available to learn (global linear progress)
   mastery: Record<number, number>; // charId -> mastery score (0-100)
   stars: number; // Currency/Points
   streak: number;
@@ -17,6 +17,7 @@ export interface UserProgress {
 
 export enum AppView {
   DASHBOARD = 'DASHBOARD',
+  LEVEL_SELECT = 'LEVEL_SELECT',
   LEARN = 'LEARN',
   REVIEW = 'REVIEW'
 }

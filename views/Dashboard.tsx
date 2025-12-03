@@ -15,6 +15,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ progress, data, onChangeVi
   const masteryValues = Object.values(progress.mastery) as number[];
   const masteredCount = masteryValues.filter(m => m >= 80).length;
   const learningCount = masteryValues.filter(m => m > 0 && m < 80).length;
+  // Limit the display on dashboard to avoid overcrowding with 500 chars
+  const displayLimit = 42; 
   const totalUnlocked = progress.unlockedIndex + 1;
 
   return (
@@ -22,7 +24,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ progress, data, onChangeVi
       {/* Header */}
       <header className="flex justify-between items-center bg-white p-6 rounded-3xl border-4 border-panda-text shadow-[8px_8px_0_#2B2D42]">
         <div>
-          <h1 className="text-4xl font-display text-panda-text mb-2">～熊猫识字～</h1>
+          <h1 className="text-4xl font-display text-panda-text mb-2">熊猫识字</h1>
           <p className="text-gray-500 font-sans">欢迎回来，小书童！</p>
         </div>
         <div className="flex items-center gap-4">
@@ -40,8 +42,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ progress, data, onChangeVi
             <BookOpen className="w-12 h-12 text-blue-400" />
           </div>
           <h2 className="text-3xl font-display text-panda-text">学习新字</h2>
-          <p className="text-gray-600">认识新的汉字，拓展词汇量！</p>
-          <Button onClick={() => onChangeView(AppView.LEARN)} variant="primary" size="lg" className="w-full">
+          <p className="text-gray-600">选择等级，认识新的汉字！</p>
+          <Button onClick={() => onChangeView(AppView.LEVEL_SELECT)} variant="primary" size="lg" className="w-full">
             开始学习
           </Button>
         </div>
@@ -60,9 +62,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ progress, data, onChangeVi
 
       {/* Progress Map (Simplified) */}
       <div className="bg-white p-6 rounded-3xl border-4 border-panda-text shadow-[8px_8px_0_#ABD1C6]">
-        <h3 className="text-2xl font-display text-panda-text mb-4">学习足迹</h3>
+        <h3 className="text-2xl font-display text-panda-text mb-4">近期学习</h3>
         <div className="flex flex-wrap gap-3 justify-center">
-          {data.slice(0, totalUnlocked + 5).map((char, index) => {
+          {data.slice(0, Math.min(totalUnlocked + 5, displayLimit)).map((char, index) => {
              const isLocked = index > progress.unlockedIndex;
              const mastery = progress.mastery[char.id] || 0;
              const isMastered = mastery >= 80;
@@ -89,10 +91,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ progress, data, onChangeVi
                </div>
              );
           })}
-          <div className="w-14 h-14 flex items-center justify-center text-gray-300 text-xl font-display">...</div>
+          {data.length > displayLimit && (
+             <div className="w-14 h-14 flex items-center justify-center text-gray-300 text-sm font-bold bg-gray-100 rounded-2xl border-2 border-gray-200">
+                +{data.length - displayLimit}
+             </div>
+          )}
         </div>
         <div className="mt-4 text-center text-sm text-gray-500">
-          已掌握: {masteredCount} | 学习中: {learningCount} | 未解锁: {data.length - totalUnlocked}
+          已掌握: {masteredCount} | 学习中: {learningCount} | 总计: {data.length}
         </div>
       </div>
     </div>
