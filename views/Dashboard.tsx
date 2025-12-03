@@ -22,7 +22,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ progress, data, onChangeVi
       {/* Header */}
       <header className="flex justify-between items-center bg-white p-6 rounded-3xl border-4 border-panda-text shadow-[8px_8px_0_#2B2D42]">
         <div>
-          <h1 className="text-4xl font-display text-panda-text mb-2">熊猫识字</h1>
+          <h1 className="text-4xl font-display text-panda-text mb-2">～熊猫识字～</h1>
           <p className="text-gray-500 font-sans">欢迎回来，小书童！</p>
         </div>
         <div className="flex items-center gap-4">
